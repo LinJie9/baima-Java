@@ -1,7 +1,20 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
+
+
+        try(BufferedWriter stream = new BufferedWriter(new FileWriter("test.txt"))){
+            stream.write("Hello World");
+            stream.newLine();
+            stream.write("Hello World");
+            stream.flush();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
 
 //        Set<Integer> set = new TreeSet<>((a, b) -> b - a); //比较，从大到小
 //        set.add(1);
