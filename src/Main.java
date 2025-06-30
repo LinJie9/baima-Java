@@ -1,30 +1,161 @@
+import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
+
 import java.io.*;
 import java.sql.SQLOutput;
 import java.util.*;
 
+
+
 public class Main {
-//    private static final List<Book> LIST = new LinkedList<>();
-    private static  List<Book> LIST;
+//private static final List<Book> LIST = new LinkedList<>();
+//private static  List<Book> LIST;
+//private static int value = 0;
+//private static int i = 0;
+//
+//private static synchronized void add(){
+//    i++;
+//}
+
+//public static void main(String[] args) throws InternalException, InterruptedException {
+
+
+    private static final Queue<Object> queue = new LinkedList<>();
+
     public static void main(String[] args) {
+        new Thread(Main::add, "厨师1").start();
+        new Thread(Main::add, "厨师2").start();
 
-        Thread t = new Thread(() -> {
-            System.out.println("我是线程：" + Thread.currentThread().getName());
-            System.out.println("B我正在计算 0-10000 之间的数的和");
-            int sum = 0;
-            for (int i = 0; i <= 10000 ; i++) {
-                sum += i;
+        new Thread(Main::take, "消费者1").start();
+        new Thread(Main::take, "消费者2").start();
+        new Thread(Main::take, "消费者3").start();
+    }
+
+    private static void add(){
+        while (true){
+            try{
+              Thread.sleep(3000);
+              synchronized (queue){
+                  String name = Thread.currentThread().getName();
+                  System.out.println(new Date() + " " + name + "鸡汤来喽！");
+                  queue.offer(name);
+                  queue.notify();
+              }
+            }catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
-            System.out.println("B的结果："+sum);
-        });
-        t.start();
-
-        System.out.println("我是线程：" + Thread.currentThread().getName());
-        System.out.println("A我正在计算 0-10000 之间的数的和");
-        int sum = 0;
-        for (int i = 0; i <= 10000 ; i++) {
-            sum += i;
         }
-        System.out.println("A的结果："+sum);
+    }
+
+    private static void take(){
+        while (true){
+            try{
+                synchronized (queue){
+                    while (queue.isEmpty())queue.wait();
+                    queue.poll();
+                    String name = Thread.currentThread().getName();
+                    System.out.println(new Date() + " " + name + "拿到了餐品，正在享用");
+                }
+
+                Thread.sleep(4000);
+            }catch (InterruptedException e){
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+
+//    Timer timer = new Timer();
+//    timer.schedule(new TimerTask() {
+//        @Override
+//        public void run() {
+//            System.out.println("我是延迟任务");
+//        }
+//    },1000, 1000);
+//    Thread.sleep(5000);
+//    timer.cancel();
+
+
+//        new Thread(() -> {
+//            for (int j = 0; j < 100000; j++) {
+//                add();
+//            }
+//        }).start();
+//
+//    new Thread(() -> {
+//        for (int j = 0; j < 100000; j++) {
+//            add();
+//        }
+//    }).start();
+//
+//    new Thread(() -> {
+//        for (int j = 0; j < 100000; j++) {
+//            synchronized (Main.class) {
+//                i++;
+//            }
+//        }
+//    }).start();
+//
+//
+//    Thread.sleep(1000);
+//    System.out.println(i);
+
+
+//        new Thread(() -> {
+//            for (int j = 0; j < 10000; j++) {
+//                i++;
+//            }
+//        }).start();
+//
+//        new Thread(() -> {
+//            for (int j = 0; j < 10000; j++) {
+//                i++;
+//            }
+//        }).start();
+//
+//        Thread.sleep(1000);
+//        System.out.println(i);
+        
+//        Main main1 = new Main();
+//        Main main2 = new Main();
+//
+//        Thread t1 = new Thread(() -> {
+//            for(int i = 0; i < 1000; i++){
+//                synchronized (main1) {
+//                    value++;
+//                }
+//            }
+//            System.out.println("线程1完成");
+//        });
+//
+//        Thread t2 = new Thread(() -> {
+//            for(int i = 0; i < 1000; i++){
+//                synchronized (main2) {
+//                    value++;
+//                }
+//            }
+//            System.out.println("线程1完成");
+//        });
+        
+        
+//        Thread t = new Thread(() -> {
+//            System.out.println("我是线程：" + Thread.currentThread().getName());
+//            System.out.println("B我正在计算 0-10000 之间的数的和");
+//            int sum = 0;
+//            for (int i = 0; i <= 10000 ; i++) {
+//                sum += i;
+//            }
+//            System.out.println("B的结果："+sum);
+//        });
+//        t.start();
+//
+//        System.out.println("我是线程：" + Thread.currentThread().getName());
+//        System.out.println("A我正在计算 0-10000 之间的数的和");
+//        int sum = 0;
+//        for (int i = 0; i <= 10000 ; i++) {
+//            sum += i;
+//        }
+//        System.out.println("A的结果："+sum);
 
 
 
@@ -89,7 +220,7 @@ public class Main {
 //
 //        }
 
-    }
+//    }
 
 //    @SuppressWarnings("uncheck")
 //    private static void load(){
