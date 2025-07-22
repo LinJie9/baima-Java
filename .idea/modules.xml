@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/baima-Java.iml" filepath="$PROJECT_DIR$/baima-Java.iml" />
+      <module fileurl="file://$PROJECT_DIR$/baima-JavaSE.iml" filepath="$PROJECT_DIR$/baima-JavaSE.iml" />
     </modules>
   </component>
 </project>

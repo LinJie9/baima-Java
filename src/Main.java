@@ -1,12 +1,61 @@
+import com.test.entity.Student;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
 
 import java.io.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.sql.SQLOutput;
 import java.util.*;
 
 
 
 public class Main {
+
+    public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException, NoSuchFieldException {
+//        Class<?>clazz1 = com.test.entity.Student.class;
+//        Class<?>clazz2 = Class.forName("com.test.entity.Student");
+//        Class<com.test.entity.Student> clazz3 = com.test.entity.Student.class;
+//
+//        System.out.println(clazz1 == clazz2);
+//        System.out.println(clazz3 == clazz2);
+
+//        Class<com.test.entity.Student> clazz = com.test.entity.Student.class;
+//        Constructor<com.test.entity.Student>constructor = clazz.getConstructor(String.class, int.class);
+//        constructor.setAccessible(true); // 加了就可以访问了
+//        com.test.entity.Student student = constructor.newInstance("小米", 18);
+//        student.test();
+//        System.out.println(student);
+//        student.test();
+
+
+//        Class<com.test.entity.Student>clazz = com.test.entity.Student.class;
+//        Method test = clazz.getMethod("test");
+//        test.invoke(new com.test.entity.Student("小明", 19));
+
+//        Class<com.test.entity.Student> clazz = com.test.entity.Student.class;
+//        Method test = clazz.getMethod("test");
+//        test.invoke(new com.test.entity.Student("小明", 21));
+
+//        Class<?> clazz = Class.forName("com.test.entity.Student");
+//        Constructor<?> constructor = clazz.getConstructor(String.class, int.class);
+//        Object o = constructor.newInstance("小明", 19);
+//        Method test = clazz.getMethod("test");
+//        System.out.println(test.invoke(o));
+
+
+//        Class<?> clazz = Class.forName("com.test.entity.Student");
+//        Field name = clazz.getDeclaredField("age");
+//        name.setAccessible(true);
+//        System.out.println(name.get(new Student("小明", 23)));
+
+            Method test = Student.class.getDeclaredMethod("test");
+            test.invoke(Student.class);
+    }
+
+
+
 //private static final List<Book> LIST = new LinkedList<>();
 //private static  List<Book> LIST;
 //private static int value = 0;
@@ -19,50 +68,50 @@ public class Main {
 //public static void main(String[] args) throws InternalException, InterruptedException {
 
 
-    private static final Queue<Object> queue = new LinkedList<>();
+//    private static final Queue<Object> queue = new LinkedList<>();
 
-    public static void main(String[] args) {
-        new Thread(Main::add, "厨师1").start();
-        new Thread(Main::add, "厨师2").start();
+//    public static void main(String[] args) {
+//        new Thread(Main::add, "厨师1").start();
+//        new Thread(Main::add, "厨师2").start();
+//
+//        new Thread(Main::take, "消费者1").start();
+//        new Thread(Main::take, "消费者2").start();
+//        new Thread(Main::take, "消费者3").start();
+//    }
 
-        new Thread(Main::take, "消费者1").start();
-        new Thread(Main::take, "消费者2").start();
-        new Thread(Main::take, "消费者3").start();
-    }
-
-    private static void add(){
-        while (true){
-            try{
-              Thread.sleep(3000);
-              synchronized (queue){
-                  String name = Thread.currentThread().getName();
-                  System.out.println(new Date() + " " + name + "鸡汤来喽！");
-                  queue.offer(name);
-                  queue.notify();
-              }
-            }catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    private static void take(){
-        while (true){
-            try{
-                synchronized (queue){
-                    while (queue.isEmpty())queue.wait();
-                    queue.poll();
-                    String name = Thread.currentThread().getName();
-                    System.out.println(new Date() + " " + name + "拿到了餐品，正在享用");
-                }
-
-                Thread.sleep(4000);
-            }catch (InterruptedException e){
-                e.printStackTrace();
-            }
-
-        }
-    }
+//    private static void add(){
+//        while (true){
+//            try{
+//              Thread.sleep(3000);
+//              synchronized (queue){
+//                  String name = Thread.currentThread().getName();
+//                  System.out.println(new Date() + " " + name + "鸡汤来喽！");
+//                  queue.offer(name);
+//                  queue.notify();
+//              }
+//            }catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
+//    }
+//
+//    private static void take(){
+//        while (true){
+//            try{
+//                synchronized (queue){
+//                    while (queue.isEmpty())queue.wait();
+//                    queue.poll();
+//                    String name = Thread.currentThread().getName();
+//                    System.out.println(new Date() + " " + name + "拿到了餐品，正在享用");
+//                }
+//
+//                Thread.sleep(4000);
+//            }catch (InterruptedException e){
+//                e.printStackTrace();
+//            }
+//
+//        }
+//    }
 
 
 //    Timer timer = new Timer();
