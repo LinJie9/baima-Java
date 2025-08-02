@@ -1,19 +1,28 @@
-import com.test.entity.Student;
-import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
-
-import java.io.*;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.sql.SQLOutput;
+// import com.test.entity.Student;
+// import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
+// import java.io.*;
+// import java.lang.reflect.Constructor;
+// import java.lang.reflect.Field;
+// import java.lang.reflect.InvocationTargetException;
+// import java.lang.reflect.Method;
+// import java.sql.SQLOutput;
 import java.util.*;
 
 
 
 public class Main {
 
-    public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException, NoSuchFieldException {
+    public static void main(String[] args) {
+
+
+        int[] arr = new int[]{3, 5, 7, 8, 1, 2, 9};
+        System.out.println(Arrays.toString(arr));
+//        Arrays.sort(arr);
+//        System.out.println(Arrays.toString(arr));
+
+
+
+
 //        Class<?>clazz1 = com.test.entity.Student.class;
 //        Class<?>clazz2 = Class.forName("com.test.entity.Student");
 //        Class<com.test.entity.Student> clazz3 = com.test.entity.Student.class;
@@ -50,8 +59,8 @@ public class Main {
 //        name.setAccessible(true);
 //        System.out.println(name.get(new Student("小明", 23)));
 
-            Method test = Student.class.getDeclaredMethod("test");
-            test.invoke(Student.class);
+//            Method test = Student.class.getDeclaredMethod("test");
+//            test.invoke(Student.class);
     }
 
 
